@@ -12,20 +12,21 @@ notable examples
 * Plug-and-play templates to practically approach scrollytelling in a fun and light way
 
 ## Tutorials
-You can access all the tutorials here on our Medium page.
-[link to Medium](https://medium.com/@scrollyforbeginners)
+You can access all the tutorials here on our [Medium page](https://medium.com/@scrollyforbeginners).
 
 ## Resources
-
+In `resources/` you can find a collection of markdown files:
 
 ## Templates
 a basic (works local without the need to build things or even a server)
-scrolytelling template.
+scrollytelling template.
+------
 
 ### Getting Started (Basic)
 
 open `01-example/index.html` in your browser. start editing the files in `01-example/`
 in any code editor to change things.
+------
 
 ### Getting Started (Advanced)
 
