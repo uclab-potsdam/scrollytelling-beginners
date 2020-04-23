@@ -18,8 +18,8 @@ You can access all the tutorials here on our [Medium page](https://medium.com/@s
 In `resources/` you can find a collection of markdown files:
 
 ## Templates
-------
-a basic (works local without the need to build things or even a server)
+
+A basic (works local without the need to build things or even a server)
 scrollytelling template.
 
 
