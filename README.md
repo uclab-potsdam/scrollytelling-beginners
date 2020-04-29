@@ -13,11 +13,25 @@ notable examples
 
 ## Tutorials
 You can access all the tutorials here on our [Medium page](https://medium.com/@scrollyforbeginners).
+Articles are divided in theory and practice.
+Theory articles are introducing some useful concepts for the practice sessions.
+Practice articles offer you solutions to coding exercises in case you get lost.
+
+**Available articles**
+* [Scrollytelling for Beginners # 1](https://medium.com/@scrollyforbeginners/scrollytelling-for-beginners-1-551c5bad9631), *Theory — Javascript, Libraries and Frameworks*
+
+**Coming soon**
+* Scrollytelling for Beginners # 1.2, *Practice - template manipulation, SVGs and steps as triggers*
+* Scrollytelling for Beginners # 2, *Theory - Generate your figures with data*
+* Scrollytelling for Beginners # 2.2, *Practice - How to import, scales, connect data and shapes*
+
 
 ## Resources
 In `resources/` you can find a collection of markdown files:
+* `resources/foundations.md` contains articles, tutorials and other resources to learn the foundations of JS and other tricks
+* `resources/random.md` is just cool stuff
 
-## Templates
+## Code
 
 A basic (works local without the need to build things or even a server)
 scrollytelling template.
