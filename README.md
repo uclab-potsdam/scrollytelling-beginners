@@ -1,4 +1,4 @@
-# Scrollytelling for Beginners
+![Scrollytelling for Beginners](cover-sfb.png)
 
 **Scrollytelling for beginners** is a collection of code, resources and tutorials
 for the FH Potsdam students to help them dive in the topic of scrollytelling and
