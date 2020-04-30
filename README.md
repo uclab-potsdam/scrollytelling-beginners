@@ -12,24 +12,25 @@ notable examples
 * Plug-and-play templates to practically approach scrollytelling in a fun and light way
 
 ## Tutorials
-You can access all the tutorials here on our [Medium page](https://medium.com/@scrollyforbeginners).
-Articles are divided in theory and practice.
+You can access all the theory articles here on our [Medium page](https://medium.com/@scrollyforbeginners).
 Theory articles are introducing some useful concepts for the practice sessions.
-Practice articles offer you solutions to coding exercises in case you get lost.
 
 **Available articles**
-* [Scrollytelling for Beginners # 1](https://medium.com/@scrollyforbeginners/scrollytelling-for-beginners-1-551c5bad9631), *Theory — Javascript, Libraries and Frameworks*
+* [Scrollytelling for Beginners # 1](https://medium.com/@scrollyforbeginners/scrollytelling-for-beginners-1-551c5bad9631): *Theory — Javascript, Libraries and Frameworks*
 
 **Coming soon**
-* Scrollytelling for Beginners # 1.2, *Practice - template manipulation, SVGs and steps as triggers*
-* Scrollytelling for Beginners # 2, *Theory - Generate your figures with data*
-* Scrollytelling for Beginners # 2.2, *Practice - How to import, scales, connect data and shapes*
+* Scrollytelling for Beginners # 2: *Theory - Generate your figures with data*
+* Scrollytelling for Beginners # 3: *Theory - Scrollytelling workflow and fancy animations*
 
 
 ## Resources
-In `resources/` you can find a collection of markdown files:
-* `resources/foundations.md` contains articles, tutorials and other resources to learn the foundations of JS and other tricks
-* `resources/random.md` is just cool stuff
+In [`resources/`](resources) you can find a collection of markdown files:
+* [`resources/foundations.md`](resources/foundations.md) contains articles, tutorials and other resources to learn the foundations of JS and other tricks
+* [`resources/random.md`](resources/random.md) is just cool stuff
+
+**Coming soon**
+* `resources/scrollytelling.md` will contain a collection of scrollytelling pieces.
+* `resources/libraries.md` will contain a selection of interesting js libraries.
 
 ## Code
 
