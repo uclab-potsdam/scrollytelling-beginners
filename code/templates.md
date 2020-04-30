@@ -1,2 +1,0 @@
-# Templates
-## Scrollytelling for Beginners
