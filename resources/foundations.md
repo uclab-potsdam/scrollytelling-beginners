@@ -31,3 +31,13 @@ Link | Author | Type | Description | Code Examples
 [The deepest reason why modern JavaScript frameworks exist](https://medium.com/dailyjs/the-deepest-reason-why-modern-javascript-frameworks-exist-933b86ebc445) | Alberto Gimeno | Article | Deep dive in frameworks and their functions. Background knowledge on web apps, JavaScript and general web development concepts are required to fully enjoy the article. | Yes, not interactive
 [Vue.js guide](https://vuejs.org/v2/guide/) | Vue | Documentation | Vue.js documentation, really important if you want to understand how Vue is working under the hook, how it keeps components and state in sync. | Yes, interactive
 [Vue.js styleguide](https://vuejs.org/v2/style-guide/) | Vue | Documentation | Vue style guide to keep under your eye all the cool things you can do style-wise to your components writing very little code. | Yes, interactive
+[Vue Reactive Properties](https://www.progress.com/blogs/a-look-at-vues-reactive-properties) | Thierry Ciot | Article | In depth look at reactive properties in Vue, how to use them to live update your HTML and other tricks | Yes, not interactive
+[v-if and v-else](https://vuejs.org/v2/guide/conditional.html) | Vue | Documentation | Chapter of Vue documentation on conditional rendering | Yes, interactive
+
+
+### Other important basics
+CSS, HTML, MarkDown, Stack Overflow: you can keep learning a lot of things, make your project even cooler and discover new approaches to code. In this session we will collect other material you can explore.
+
+Link | Author | Type | Description | Code Examples
+--- | --- | --- | --- | ---
+[CSS complete guide](https://developer.mozilla.org/en-US/docs/Web/CSS)| MDN | Documentation | Complete documentation on Cascading Style Sheets | Yes, not interactive

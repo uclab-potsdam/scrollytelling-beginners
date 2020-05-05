@@ -27,20 +27,20 @@ Theory articles are introducing some useful concepts for the practice sessions.
 In [`resources/`](resources) you can find a collection of markdown files:
 * [`resources/foundations.md`](resources/foundations.md) contains articles, tutorials and other resources to learn the foundations of JS and other tricks
 * [`resources/random.md`](resources/random.md) is just cool stuff
+* [`resources/libraries.md`](resources/libraries.md) will contain a selection of interesting js libraries.
 
 **Coming soon**
 * `resources/scrollytelling.md` will contain a collection of scrollytelling pieces.
-* `resources/libraries.md` will contain a selection of interesting js libraries.
+]
 
 ## Code
 
-A basic (works local without the need to build things or even a server)
-scrollytelling template.
+A basic (works local without the need to build things or even a server) scrollytelling template. See [`code/solutions`](code/solutions) for exercises solutions step by step.
 
 
 ### Getting Started (Basic)
 ------
-Open `01-example/index.html` in your browser. start editing the files in `01-example/`
+Open `S01-Intro/index.html` in your browser. start editing the files in [`S01-Intro/`](code/S01-Intro)
 in any code editor to change things.
 
 ### Getting Started (Advanced)

@@ -34,8 +34,10 @@
 
       <section class="scrolly">
         <figure ref="figure">
-          <svg :width="width" :height="height">
+          <img v-if="step === 4" src="../assets/images/beach.jpg"/>
+          <svg v-else :width="width" :height="height">
             <rect class="bg" :width="width * progress" :height="height" />
+            <circle class="my-circle" v-if="step >= 2" :cx="width / 2" :cy="height / 2" :r="height / 2"/>
             <text class="step" :y="height / 2" dy="0.35em" :x="width / 2">{{ step }}</text>
           </svg>
         </figure>
@@ -73,6 +75,17 @@
               Und so war dieser Park, der wie kein anderer den Kindern offen scheint, auch sonst für mich mit
               Schwierigem, Undurchführbarem verstellt. Wie selten unterschied ich die Fische im Goldfischteich. Wie viel
               versprach die Hofjägerallee mit ihrem Namen und wie wenig hielt sie.
+            </p>
+          </div>
+          <div class="step my-custom-block">
+            <p>
+              <strong>My Custom Block of Text → </strong>
+              [The Analytical Engine] might act upon other things besides number, were objects found whose mutual
+              fundamental relations could be expressed by those of the abstract science of operations, and which should
+              be also susceptible of adaptations to the action of the operating notation and mechanism of the
+              engine...Supposing, for instance, that the fundamental relations of pitched sounds in the science of
+              harmony and of musical composition were susceptible of such expression and adaptations, the engine might
+              compose elaborate and scientific pieces of music of any degree of complexity or extent.
             </p>
           </div>
         </article>

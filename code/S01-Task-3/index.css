@@ -103,19 +103,19 @@ article {
   margin: 20vh 0;
 }
 
-.step.my-custom-paragraph {
-  align-self: flex-end; /*this control the block alignment*/
-}
-
-.my-custom-paragraph strong {
-  color: red;
-}
-
 .step:nth-child(1) {
   margin-top: -50vh;
 }
 .step:nth-last-child(1) {
   margin-bottom: 50vh;
+}
+
+.step.my-custom-block {
+  align-self: flex-end;
+}
+
+.step.my-custom-block strong {
+  color: #FFDC00;
 }
 
 figure {
@@ -130,6 +130,14 @@ figure {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+figure img {
+  width: 50%;
 }
 
 figure svg {
@@ -137,12 +145,12 @@ figure svg {
   top: 0;
 }
 
-figure circle {
-  fill: yellow;
-}
-
 svg rect.bg {
   fill: var(--color-accent);
+}
+
+svg .my-circle {
+  fill: #FFDC00;
 }
 
 svg text.step {
