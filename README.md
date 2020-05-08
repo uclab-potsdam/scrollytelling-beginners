@@ -17,9 +17,10 @@ Theory articles are introducing some useful concepts for the practice sessions.
 
 **Available articles**
 * [Scrollytelling for Beginners # 1](https://medium.com/@scrollyforbeginners/scrollytelling-for-beginners-1-551c5bad9631): *Theory — Javascript, Libraries and Frameworks*
+* [Scrollytelling for Beginners # 2](https://medium.com/@scrollyforbeginners/scrollytelling-for-beginners-2-fa91901a9746): *Theory - Import data, scale them and draw some figures*
+
 
 **Coming soon**
-* Scrollytelling for Beginners # 2: *Theory - Generate your figures with data*
 * Scrollytelling for Beginners # 3: *Theory - Scrollytelling workflow and fancy animations*
 
 
@@ -31,7 +32,6 @@ In [`resources/`](resources) you can find a collection of markdown files:
 
 **Coming soon**
 * `resources/scrollytelling.md` will contain a collection of scrollytelling pieces.
-]
 
 ## Code
 

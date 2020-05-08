@@ -41,3 +41,4 @@ CSS, HTML, MarkDown, Stack Overflow: you can keep learning a lot of things, make
 Link | Author | Type | Description | Code Examples
 --- | --- | --- | --- | ---
 [CSS complete guide](https://developer.mozilla.org/en-US/docs/Web/CSS)| MDN | Documentation | Complete documentation on Cascading Style Sheets | Yes, not interactive
+[Set up a local server](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server) | MDN | Documentation | Learn how to launch a local server on your computer

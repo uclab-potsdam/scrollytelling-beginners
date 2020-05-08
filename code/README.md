@@ -22,4 +22,11 @@ Base template and demo:
 *coming soon*
 
 ***
+
+## Bonus Exercises
+Extra examples showing specific features you might be interested in:
+
+* `X01-Image-Shuffle` - Don't really like all the `svg` stuff (even if you should)? In this example we show you how to create a sequence of images toggled by user's scroll.
+
+***
 In the [`/solutions`](/solutions) folder you can find solutions to each session exercises.
