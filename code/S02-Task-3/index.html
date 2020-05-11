@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Scrollytelling Template</title>
+  <script src="../assets/js/vue.js"></script>
+  <script src="../assets/js/scrollama.min.js"></script>
+  <script src="../assets/js/d3.min.js"></script>
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/fonts.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <h1>Scrollytelling<br>Template ✨</h1>
+    </header>
+    <main>
+      <section class="intro">
+        <p>
+          <strong>Intro Text → </strong>
+          Sich in einer Stadt nicht zurechtfinden heißt nicht viel. In einer Stadt sich aber zu verirren, wie man in
+          einem Walde sich verirrt, braucht Schulung. Da müssen Straßennamen zu dem Irrenden so sprechen wie das Knacken
+          trockner Reiser und kleine Straßen im Stadtinnern ihm die Tageszeiten so deutlich wie eine Bergmulde
+          widerspiegeln. Diese Kunst habe ich spät erlernt; sie hat den Traum erfüllt, von dem die ersten Spuren
+          Labyrinthe auf den Löschblättern meiner Hefte waren. Nein, nicht die ersten, denn vor ihnen war das eine,
+          welches sie überdauert hat.
+        </p>
+      </section>
+
+      <section class="scrolly">
+        <figure ref="figure">
+          <svg :width="width" :height="height">
+            <text :x="width / 2" dy="2em"> Chart Title </text>
+            <g :transform="`translate(${margin} ${margin})`">
+              <g v-for="(bar, i) in bars" :key="`bar-${i}`" :transform="`translate(${barWidth * (i + 0.5)} 0)`">
+                <rect x="-10" :y="bar.y" width="20" :height="bar.height" />
+                <text x="0" :y="bar.y" dy="-0.5em">
+                  {{ bar.price }}
+                </text>
+                <text x="0" :y="innerHeight" dy="1.5em">
+                  {{ bar.city }}
+                </text>
+              </g>
+              <line :x1="0" :x2="innerWidth" :y1="innerHeight" :y2="innerHeight"/>
+            </g>
+          </svg>
+        </figure>
+        <article>
+          <div class="step">
+            <p>
+              <strong>Paragraph 1 → </strong>
+              Der Weg in dieses Labyrinth, dem seine Ariadne nicht gefehlt hat, führte über die Bendlerbrücke, deren
+              linde Wölbung die erste Hügelflanke für mich wurde. Unweit von ihrem Fuße lag das Ziel: der Friedrich
+              Wilhelm und die Königin Luise. Auf ihren runden Sockeln ragten sie aus den Beeten wie gebannt von
+              magischen Kurven, die ein Wasserlauf vor ihnen in den Sand schrieb.
+            </p>
+          </div>
+          <div class="step">
+            <p>
+              <strong>Paragraph 2 → </strong>
+              Lieber als an die Herrscher wandte ich mich aber an ihre Sockel, weil, was darauf vorging, wenn auch
+              undeutlich im Zusammenhange näher im Raum war. Daß es mit diesem Irrgang etwas auf sich hat, erkannte ich
+              seit jeher an dem breiten, banalen Vorplatz, der durch nichts verriet, daß hier, nur wenige Schritte von
+              dem Korso der Droschken und Karossen abgelegen, der sonderbarste Teil des Parkes schläft.
+            </p>
+          </div>
+          <div class="step">
+            <p>
+              <strong>Paragraph 3 → </strong>
+              Davon empfing ich schon sehr früh ein Zeichen. Hier nämlich oder unweit muß ihr Lager jene Ariadne
+              abgehalten haben, in deren Nähe ich zum ersten Male, und um es nie mehr zu vergessen, das begriff, was mir
+              als Wort erst später zufiel: Liebe. Doch gleich an seiner Quelle taucht das »Fräulein« auf, das sich als
+              kalter Schatten auf sie legte.
+            </p>
+          </div>
+          <div class="step">
+            <p>
+              <strong>Paragraph 4 → </strong>
+              Und so war dieser Park, der wie kein anderer den Kindern offen scheint, auch sonst für mich mit
+              Schwierigem, Undurchführbarem verstellt. Wie selten unterschied ich die Fische im Goldfischteich. Wie viel
+              versprach die Hofjägerallee mit ihrem Namen und wie wenig hielt sie.
+            </p>
+          </div>
+        </article>
+      </section>
+      <section class="outro">
+        <p>
+          <strong>Outro → </strong>
+          Wie oft suchte ich das Gebüsch umsonst, in dem mit roten, weißen, blauen Türmchen ein Kiosk im Stil der
+          Ankersteinbaukästen stand. Wie hoffnungslos kehrt mit jedem Frühling meine Liebe zum Prinzen Louis Ferdinand
+          zurück, zu dessen Füßen die ersten Krokus und Narzissen standen. Ein Wasserlauf, der mich von ihnen trennte,
+          machte sie mir so unberührbar, als wenn sie unter einem Glassturz gestanden hätten.
+        </p>
+      </section>
+    </main>
+    <footer>
+    </footer>
+  </div>
+  <script src="./index.js"></script>
+</body>
+
+</html>
