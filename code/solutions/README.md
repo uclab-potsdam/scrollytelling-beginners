@@ -3,178 +3,255 @@
 
 In this session we will work on the template.
 We will understand how to add new blocks for text, how to incorporate and edit svg elements and how to hide or show custom elements during the scroll.
+[S01-Solutions.md](S01-Solutions.md)
+
+**Session #2**
+### How do we build data driven figures?
+
+In this session we will go beyond our basic template structure and usage.
+We will build (with the help of D3.js) a bar-chart using REAL data. We will start by preparing and exporting the data in `csv` and by calculating chart width, height and spacing.
+Then we will import data and use them to build our chart.
+
+---
+
+#### Exercise 0
+Export a `csv` from Excel (or OpenOffice, or Google Sheets...). Then prepare your code.
+
+**Step 1** - Let's open our spreadsheet assuming that you want to take a look at your data or even edit them,
+common formats could be `.xlsx`, `.ods` or directly `.csv`. After working with them we want
+to export a `.csv` table, ready to be used.
+
+* In OpenOffice go to 'File > Save As...', now you can select a file extension from the dropdown menu at the bottom. Select Text CSV (`.csv`).
+* If asked click on 'Keep current format'.
+* Select text and field delimiter. A common field delimiter is ','.
+* Save your file and move it to the `data` directory, located at `code/assets/data`
+
+>⚠️(When working in Excel or Google Sheets the process is quite similar: instead of 'Save As...' you might have to select 'Export' or 'Download')
+
+**Step 2** - Now our data are ready to be used. We have to prepare our code. To do so we start by calculating width and height of our chart, which will be used later to position our figure inside the `svg` tag in the `index.html` file.
+
+Go to `index.js`. You will notice that our file is organised in "boxes". We have a bigger box called `app` and inside we have *smaller* boxes such as: `data`, `mounted`, `computed` and so on. This structure is proper of Vue.js and it will allow us to keep our code consistent. If you want to learn more about what does what you can take a look here: [The Vue Instance](https://vuejs.org/v2/guide/instance.html).
+
+In data define `margin`:
+```js
+el: '#app',
+data: {
+  scroller: scrollama(),
+  width: 500,
+  height: 300,
+  step: 0,
+  progress: 0,
+  margin: 64 //You can do it like this!
+}
+```
+**Step 3** - Let's add to `computed` two functions to calculate inner width and height, based on the original `width` and `height` properties in `data`.
+
+```js
+computed: {
+  innerHeight() {
+    //Using this allows us to access properties defined in data (or calculated in another computed property)
+    return this.height - this.margin * 2
+  },
+  innerWidth() {
+    return this.width - this.margin * 2
+  }
+}
+```
+The cool thing about computed properties is that **they are cached based on their reactive dependencies**. Which is a very fancy way to say: as long as width and height will remain unchanged our computed properties won't change, if they will update accordingly! Wow!
 
 ---
 
 #### Exercise 1
-Add a custom block of text in the `index.html` file.  
+Import and parse data, create a JS object that can be used to build our chart.
 
-**Step 1** - Open the `S01-Intro` folder in your code editor of choice. You can open the editor and drag the folder or (in Atom): File > Add project folder > select the folder.
+**Step 1** - Now it's time to use the data in the assets folder. First thing first we have to create an empty array `[]` named data inside `data`.
 
-**Step 2** - Open `index.html` in your preferred browser. Open the same file in your code editor.
-
-As you can see the template is divided in two main sections:
-
-```html
-<figure ref="figure">...</figure>
-```
-and
-```html
-<article>...</article>
-```
-
-While the `<figure>` section contains all the assets we want to trigger via scrollying (such as svgs, images and so on), `<article>` contains the boxes of text that will scroll on top of our figure.
-
-**Step 3** - Go to the last box of text (paragraph 4) and after the closing `</div>` tag add a new block of text. Remember to add an additional class to the div, instead of having only `step` we could have something like `step my-block` or `step block-num-five`.
-This is how it should look like:
-
-```html
-<div class="step my-custom-block">
-  <p>
-    <strong>A title</strong>
-    Some text telling something!
-  </p>
-</div>
-```
-
-**Step 4** - Now save the modified `index.html` file and refresh the page in your browser, by scrolling down you should see the new block of text added at the bottom.
-
-**Step 5** - To change the block of text position and title color open the `index.css` file in your code editor.
-
-**Step 6** - Now you can create a new style rule by calling both the classes we assigned to our new block: `step` and `my-custom-block`, this will limit our style changes to the one element we created without modifying the other steps. The selector will look like this:
-```css
-.step.my-custom-block {
-
+```js
+el: '#app',
+data: {
+  scroller: scrollama(),
+  width: 500,
+  height: 300,
+  step: 0,
+  progress: 0,
+  data: [], //here our empty array!
+  margin: 64
 }
 ```
-Now we can control the block position:
-```css
-.step.my-custom-block {
-  align-self: flex-end; /*this control the block alignment*/
+
+**Step 2** - Always, in the `index.js` file you will notice just before the `computed` a function called `mounted()`.
+
+The code inside this function will be executed only after the view on our browser is rendered. Here we want to use the `d3.csv` method to import our data.
+
+We will write something like this:
+```js
+mounted() {
+  //some other code you don't want to touch
+  d3.csv('../assets/data/avocado.csv').then(data => {
+    console.log(data)
+  })
 }
 ```
-And the title color:
-```css
-.step.my-custom-block strong {
-  color: #FFDC00; /*by specifying 'strong' I am targeting the block title*/
-}
+What are we doing? We are using the path to our file (could also be an external URL) as an input for an async request and then we are returning it by using the standard JS method `then()`.
+
+**Step 3** - Inside `then()` we can map our data to return a JS object representing only the fields we need or converting strings to numbers for a easier usage later:
+
+```js
+d3.csv('../assets/data/avocado.csv').then(data => {
+  //If we log our data initially...
+  console.log(data)
+  //...Then we assign to our empty array a new map...
+  this.data = data.map(d => {
+    return {
+      city: d.city,
+      price: +d.price,
+      volume: +d.volume
+    }
+  })
+  //...And then we log them again, we can see that they are quite different before and after map. Beware, we are using this.data, not data!
+  console.log(this.data)
+})
 ```
-As you can see from the CSS file you can change a lot of properties and style elements. [Here you can find a complete guide to CSS](https://developer.mozilla.org/en-US/docs/Web/CSS).
+Now our data are ready to be used!
 
 ---
 
-#### Exercise 2  
-Add a new circle in the middle of the svg inside the `<figure>` tag, make it appear on screen when the `step >= 2`.
+#### Exercise 2
+Access data in the `html`, create on bar for each row in data.
 
-**Step 1** - In the `index.html` file go to the `<figure>` section. Here you can see an `<svg>` tag.
+**Step 1** - Go to the `index.html` file. Inside the `svg` tag we can now access our data!
 
-**Step 2** - Inside the `<svg>` tag add a circle element, like this:
-
-```html
-<svg :width="width" :height="height">
-  <rect class="bg" :width="width * progress" :height="height" />
-  <!-- This is the circle element -->
-  <circle class="my-circle" />
-  <text class="step" :y="height / 2" dy="0.35em" :x="width / 2">{{ step }}</text>
-</svg>
-
-```
-
-It is **really important** that you:
-* Assign a unique class, such as `my-circle`
-* Put it below the `<rect/>` element, since it has to be rendered after the rectangle to be visible (it's like layers on Photoshop)
-
-Step 3 - Now refresh the browser aaaand... nothing happens!
-
-We forgot something important: position and size of our element. We need to add some properties such as `cx`, `cy` and `r` in the `<circle/>` element, to determine respectively its x and y position, and its radius.
-
-To do so we can just define a property and assign a value to it in the tag. The code now will look like this:
+First of all let's create a `g`, we can use `margin`
+to translate it horizontally and vertically.
 
 ```html
 <svg :width="width" :height="height">
-  <rect class="bg" :width="width * progress" :height="height" />
-  <!-- This is the circle element, with position and radius assigned -->
-  <circle class="my-circle" cx="10" cy="10" r="5"/>
-  <text class="step" :y="height / 2" dy="0.35em" :x="width / 2">{{ step }}</text>
+  <text :x="width / 2" dy="2em"> Chart Title </text>
+  <g :transform="`translate(${margin} ${margin})`">
+  </g>
 </svg>
 
 ```
-We added the three properties we needed, now if you refresh you should see a *tiny little* dot on the left up corner of your screen.
-
-Mmmhh.. 😕
-
-**Step 4** - We can still achieve a better result.
-To make our circle as big as our figure section and to position it at the center of the page we can use a very powerful framework feature: [reactiveness](https://www.progress.com/blogs/a-look-at-vues-reactive-properties).
-
-If we take a look at the `<text/>` element below we can spot some weird `:` in front of the `y` and `x` properties. By using the colon glyph in front of HTML properties we make them reactive, meaning that we can input data, calculations, functions, etc. and when the DOM is compiled they will become numbers!
-
-Go back to our circle element and change the properties like this to center our circle and make it half of the `height`:
-```html
-<svg :width="width" :height="height">
-  <rect class="bg" :width="width * progress" :height="height" />
-  <!-- This is the circle element, with reactive position and radius -->
-  <circle class="my-circle" :cx="width / 2" :cy="height / 2" :r="height / 2"/>
-  <text class="step" :y="height / 2" dy="0.35em" :x="width / 2">{{ step }}</text>
-</svg>
-
-```
-By refreshing our browser we can se how the dot changed becoming bigger. If we resize our page the circle change accordingly, becoming smaller or bigger.
-
-**Step 5** - Now we can do a similar thing by making the dot appearing only when a certain step is reached by the reader.
-
-Go back to the code and add `v-if="step >= 2"` to your circle element. Like this:
+**Step 2** - Then **inside** the group let's create an horiztonal axis at the bottom, by adding a `line`
 
 ```html
 <svg :width="width" :height="height">
-  <rect class="bg" :width="width * progress" :height="height" />
-  <!-- This is the circle element, with reactive position and radius, appearing if step is >= 2 -->
-  <circle class="my-circle" v-if="step >= 2" :cx="width / 2" :cy="height / 2" :r="height / 2"/>
-  <text class="step" :y="height / 2" dy="0.35em" :x="width / 2">{{ step }}</text>
-</svg>
-
-```
-`v-if` is a Vue attribute to enable conditional rendering. Seems complicated, but it's almost the same as a JS `if statement`. If a condition is met (in our case the block of text scrolled by the user is equal to number 2 or bigger), *then* an html block will be rendered visible to the reader.
-
->⚠️ Obviously things are just a little bit more complicated. For instance, reactive HTML works with values previously computed by the user in the JS file. However to use our template you don't have to know all those things. (You could still learn them: x, x and x)
-
----
-#### Exercise 3
-When `step === 4` (step they custom step you created in exercise #1) substitute the svg with an image of your choice, the image has to be centered on the screen and 50% smaller.
-
-**Step 1** - In the `<figure>` session of the code add an image tag.
-
-The tag should have a `src` property pointing at the images folder in assets. We can define a relative path for it by adding ../ in front of our path.
-
-The result should be something like this:
-
-```html
-<img src="../assets/images/beach.jpg" />
-```
-
-**Step 2** - As you can see on refresh now the image is "stealing" space from the svg. Since we want to make the image appear instead of the svg and not together with it we have to add `v-if` and `v-else` to our elements.
-
-First `v-if` to determine when the image is going to be rendered:
-
-```html
-<img v-if="step === 4" src="../assets/images/beach.jpg" />
-```
-
-and then `v-else` to determine what will happen to the svg when the image fade in, this time we can leave it empty:
-
-```html
-<svg v-else :width="width" :height="height">
-  ...
+  <text :x="width / 2" dy="2em"> Chart Title </text>
+  <g :transform="`translate(${margin} ${margin})`">
+    <!-- This line uses innerHeight and innerWidth to determine how long it is and where it is positioned on the page -->
+    <line :x1="0" :x2="innerWidth" :y1="innerHeight" :y2="innerHeight"/>
+  </g>
 </svg>
 ```
 
-**Step 3** - Now you should see our image appearing only when we reach the last step. Our goal is to make it smaller.
+**Step 3** - Let's create another group. This one will be a special one. By using the `v-for` directive we can use an array of data and loop through it to *create as much svg groups as there are elements in the array itself*.
 
-To do so we can add a CSS rule:
+Bear with me for a sec, it's tough but if you get it the magic will be yours.
 
-```css
-figure img {
-  width: 50%;
-}
+While on our code editor we will have something like this:
+
+```html
+<svg :width="width" :height="height">
+  <text :x="width / 2" dy="2em"> Chart Title </text>
+  <g :transform="`translate(${margin} ${margin})`">
+    <g v-for="(bar, i) in data" :key="`bar-${i}`" :transform="`translate(${barWidth * (i + 0.5)} 0)`">
+      <!-- This group is empty, so you will see only empty groups on refresh -->
+    </g>
+    <line :x1="0" :x2="innerWidth" :y1="innerHeight" :y2="innerHeight"/>
+  </g>
+</svg>
+
 ```
 
-Now our image should be smaller.
+If we use the inspector tool in our browser we will see something like this:
+
+```html
+<!-- This is the first group we defined -->
+<g transform="translate(64 64)">
+  <!-- These groups here are dinamically generated via the v-for directive based on the data we have -->
+  <g transform="translate(103.25 0)"></g>
+  <g transform="translate(309.75 0)"></g>
+  <g transform="translate(516.25 0)"></g>
+  <g transform="translate(722.75 0)"></g>
+</g>
+
+```
+`v-for` is a directive that is used to render a list of elements. It has a special syntax in the form of `item in items`, where `item` our single element. (It could be whatever, also `banana in bananas`, this syntax is helpful for us in understanding what is going on).
+
+Let's look at it in detail:
+
+```html
+<!-- data is our data! As simple as that -->
+<!-- bar is a single element in data, we call it `bar` so that we actually know what we are referring to-->
+<!-- i is the index for that specific element -->
+<g v-for="(bar, i) in data" :key="`bar-${i}`" :transform="`translate(${barWidth * (i + 0.5)} 0)`"></g>
+```
+**Long story short:** I can create one unique element and use the `v-for` directive to generate as much other elements as I need, be them 5 or 50000. Then I can also use the properties of this single element!
+
+>⚠️barWidth is used to position each group so they don't overlap each other. It's a computed property identical to innerWidth, but it's returning the following calculation: **return this.innerWidth / this.data.length** If you do not calculate barWidth all the groups will be stacked on top of each other.
+
+For example:
+```html
+<svg :width="width" :height="height">
+  <text :x="width / 2" dy="2em"> Chart Title </text>
+  <g :transform="`translate(${margin} ${margin})`">
+    <g v-for="(bar, i) in data" :key="`bar-${i}`" :transform="`translate(${barWidth * (i + 0.5)} 0)`">
+      <!-- I am generating text using cities names -->
+      <text x="0" :y="innerHeight" dy="1.5em">
+        {{ bar.city }}
+      </text>
+    </g>
+    <line :x1="0" :x2="innerWidth" :y1="innerHeight" :y2="innerHeight"/>
+  </g>
+</svg>
+
+```
+
+Will look like this in the inspector:
+```html
+<g transform="translate(64 64)">
+    <g transform="translate(103.25 0)">
+      <text x="0" y="675" dy="1.5em">
+          Boston
+        </text>
+    </g>
+    <g transform="translate(309.75 0)">
+     <text x="0" y="675" dy="1.5em">
+        Chicago
+      </text>
+    </g>
+    <g transform="translate(516.25 0)">
+      <text x="0" y="675" dy="1.5em">
+        Los Angeles
+      </text>
+    </g>
+    <g transform="translate(722.75 0)">
+      <text x="0" y="675" dy="1.5em">
+        New York
+      </text>
+    </g>
+  </g>
+```
+**Step 3** - Now we can also generate some `<rect>` elements: our bars!
+
+In the previously created `g` where the `v-for` is happening write:
+
+```html
+<svg :width="width" :height="height">
+  <text :x="width / 2" dy="2em"> Chart Title </text>
+  <g :transform="`translate(${margin} ${margin})`">
+    <g v-for="(bar, i) in data" :key="`bar-${i}`" :transform="`translate(${barWidth * (i + 0.5)} 0)`">
+      <!-- I am generating text using cities names -->
+      <rect x="-10" :y="0" width="20" :height="innerHeight" />
+      <text x="0" :y="innerHeight" dy="1.5em">
+        {{ bar.city }}
+      </text>
+    </g>
+    <line :x1="0" :x2="innerWidth" :y1="innerHeight" :y2="innerHeight"/>
+  </g>
+</svg>
+
+```
+We did it! We have bars!
+Actuallky...
+Now you will just see tiny little rectangles. Absolutely meaningless. In the next exercise we will see how to appropriately scale them according to our viewport.
