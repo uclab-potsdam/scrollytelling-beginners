@@ -444,3 +444,149 @@ Now we will change things around to get this:
 </svg>
 ```
 They look really similar, since the logic behind them it's identical. However instead of using data directly we are using the copy we created in `bars()`.
+
+If you look in the browser you should have perfect bars now, scaled and positioned according to data and viewport!
+
+Did you know that avocados are more expensive in New York than in LA? Well, now you know!
+
+---
+
+#### Exercise 4
+When `step > 0` instead of showing avocados `prices` show `volumes` of sold avocados according to cities.
+
+In Session 01 we learned how to use step to trigger svg elements and pictures. Step can also be used in js to trigger other changes.
+
+**Step 1** - In 'index.js' let's add another computed property:
+
+```js
+attribute () {
+
+}
+```
+
+Inside we can use our step to return different strings based on the reader position on the page:
+
+```js
+attribute () {
+  return this.step === 0 ? 'price' : 'volume'
+}
+```
+This literally means: dear attribute, if `step` is equal to 0 return `'price'`, otherwise (if `step`is different) return `'volume'`.
+
+>⚠️If we write `console.log(this.attribute)` in our `mounted()` container we can directly use the browser console to check when and how this change is triggered. Remember: `console.log` is your friend!
+
+**Step 2** - Now that we defined an attribute dependent on a condition we need to edit our code whenever we used `d.price` to determine what data were needed to create our bars.
+
+```js
+scaleY () {
+  const values = this.data.map(d => d[this.attribute]) // We need to change it here...
+  const domain = [0, d3.max(values)]
+  const range = [0, this.innerHeight]
+  return d3.scaleLinear().domain(domain).range(range)
+},
+bars () {
+  return this.data.map((d, index) => {
+    const barHeight = this.scaleY(d[this.attribute]) // ...here...
+    return {
+      city: d.city,
+      value: d[this.attribute], // ... and here.
+      y: this.innerHeight - barHeight,
+      height: barHeight
+    }
+  })
+}
+```
+
+>⚠️Cute Atom trick: select d.price in the code once > cmd + F and youwill trigger the find function in Atom. By writing 'this.attribute' in the *'Replace in current buffer'* and then hitting *Replace* you will be done!
+
+By doind so we are exchanging `d.price` which is a fixed key with a dynamic property: `d.[this.attribute]`.
+
+On refresh you should see the same bar-chart than before, however if you scroll down the data will switch.
+
+---
+
+#### Exercise 5
+Create thicks and labels to generate a vertical axis.
+
+**Step 1** - We start again by creating a new computed property! This time we will call it `ticksY`, since we will use it to build our axis ticks.
+
+```js
+ticksY () {
+
+}
+```
+Inside we want to combine the d3 `ticks()` method with `map`. While the first one is automatically returning an array of numbers inside the domain, we also want to loop through them in order to obtain a better designed array of objects for our html.
+
+```js
+ticksY () {
+  //this.scaleY.ticks(5) = [ 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ]
+  return this.scaleY.ticks(5).map(tick => {
+    return {
+      //Inside map we return value, which is the value (without scaling it)
+      value: tick,
+      //Then we return y, which is the scaled position of our tick
+      y: this.innerHeight - this.scaleY(tick)
+    }
+  })
+}
+```
+
+**Step 2** - Now, in `index.html` we use again a `v-for` instance to generate our axis with its ticks.
+
+```html
+<svg :width="width" :height="height">
+<!-- Some other code, probably the bars one -->
+    <!-- Here we start by creating a group -->
+    <g v-for="(tick, i) in ticksY" :key="`tick-${i}`" :transform="`translate(0 ${tick.y})`">
+      <!-- Here we use value and y to position and write the correct number -->
+      <line :x1="0" :x2="innerWidth" :y1="0" :y2="0"/>
+      <text class="tick" x="0" :y="0" dy="-0.5em">
+        {{ tick.value }}
+      </text>
+    </g>
+</svg>
+
+```
+At the end we should obtain an `svg` that looks like this:
+
+```html
+<svg :width="width" :height="height">
+  <!-- Here we use the attribute to assign the correct name to the chart when the data change -->
+  <text :x="width / 2" dy="2em">{{ attribute }}</text>
+  <g :transform="`translate(${margin} ${margin})`">
+    <!-- First v-for: we are creating bars! -->
+    <g v-for="(bar, i) in bars" :key="`bar-${i}`" :transform="`translate(${barWidth * (i + 0.5)} 0)`">
+      <rect x="-10" :y="bar.y" width="20" :height="bar.height" />
+      <text x="0" :y="bar.y" dy="-0.5em">
+        {{ bar.value }}
+      </text>
+      <text x="0" :y="innerHeight" dy="1.5em">
+        {{ bar.city }}
+      </text>
+    </g>
+    <!-- Second v-for: we are creating the ticks for our axis -->
+    <g v-for="(tick, i) in ticksY" :key="`tick-${i}`" :transform="`translate(0 ${tick.y})`">
+      <line :x1="0" :x2="innerWidth" :y1="0" :y2="0"/>
+      <text class="tick" x="0" :y="0" dy="-0.5em">
+        {{ tick.value }}
+      </text>
+    </g>
+  </g>
+</svg>
+
+```
+
+---
+
+#### Final Remarks
+**The general logic behind what we did**
+While we use JS to calculate values, scale them and prepare all the small parts we need for creating a chart, we use HTML and svg to actually *draw* on screen.
+It's like playing with legos and make sure before we start building that we have all the blocks and pieces we need. Our resulting house will be way better if we take care of organising what we need beforehand and it will also become easier to adjust the house if we need to make space for a new room.
+
+**Are there other possible ways of doing it?**
+Yes, there are. If you dive into D3 you will probably notice that the majority of tutorials, guides and official documentation are using a completely different approach. The one that we just showed you works since we are integrating Vue.js, a framework that allows special features. Frameworks in general are very popular and they are used more and more everyday, it's important to learn how they work.
+
+**What if I am stuck even after this tutorial and I am panicking?**
+All the necessary knowledge to successfully integrate your graphics in our template are covered in Session 01.
+Coding requires time and patience, sometimes you might just not be interested in getting there!
+Use the examples provided in Session 01 and you will be more than fine ☺️ 
