@@ -28,9 +28,11 @@ to export a `.csv` table, ready to be used.
 
 >⚠️(When working in Excel or Google Sheets the process is quite similar: instead of 'Save As...' you might have to select 'Export' or 'Download')
 
+**Step 1.1** - Before you dive into code: [start a local server!](https://github.com/more-ginger/scrollytelling-beginners#getting-started-advanced)
+
 **Step 2** - Now our data are ready to be used. We have to prepare our code. To do so we start by calculating width and height of our chart, which will be used later to position our figure inside the `svg` tag in the `index.html` file.
 
-Go to `index.js`. You will notice that our file is organised in "containers". We have a bigger box called `app` and inside we have *smaller* containers such as: `data`, `mounted`, `computed` and so on. This structure is proper of Vue.js and it will allow us to keep our code consistent. If you want to learn more about what does what you can take a look here: [The Vue Instance](https://vuejs.org/v2/guide/instance.html).
+Go to `index.js`. You will notice that our file is organised in "containers". We have a bigger container called `app` and inside we have *smaller* containers such as: `data`, `mounted`, `computed` and so on. This structure is proper of Vue.js and it will allow us to keep our code consistent. If you want to learn more about what does what you can take a look here: [The Vue Instance](https://vuejs.org/v2/guide/instance.html).
 
 In data define `margin`:
 ```js
@@ -94,7 +96,7 @@ mounted() {
 ```
 What are we doing? We are using the path to our file (could also be an external URL) as an input for an async request and then we are returning it by using the standard JS method `then()`.
 
-**Step 3** - Inside `then()` we can map our data to return a JS object representing only the fields we need or converting strings to numbers for a easier usage later:
+**Step 3** - Inside `then()` we can [map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) our data to return a JS object representing only the fields we need or converting strings to numbers for a easier usage later:
 
 ```js
 d3.csv('../assets/data/avocado.csv').then(data => {
@@ -144,7 +146,7 @@ to translate it horizontally and vertically.
 </svg>
 ```
 
-**Step 3** - Let's create another group. This one will be a special one. By using the `v-for` directive we can use an array of data and loop through it to *create as much svg groups as there are elements in the array itself*.
+**Step 3** - Let's create another group. This one will be a special one. By using the [`v-for` directive](https://medium.com/javascript-in-plain-english/list-rendering-with-vue-js-v-for-directive-91a0a7756a68) we can use an array of data and loop through it to *create as much svg groups as there are elements in the array itself*.
 
 Bear with me for a sec, it's tough but if you get it the magic will be yours.
 
@@ -253,14 +255,14 @@ In the previously created `g` where the `v-for` is happening write:
 ```
 We did it! We have bars!
 Actually...
-Now you will just see tiny little rectangles. Absolutely meaningless. In the next exercise we will see how to appropriately scale them according to our viewport.
+Now you will just see tiny little rectangles. Absolutely meaningless. In the next exercise we will see how to appropriately scale them according to our data.
 
 ---
 
 #### Exercise 3
 Create an yScale and apply it to data.
 
-**Step1** - In the `computed` container write a new function, inside this function create one variable named `vaues`:
+**Step1** - In the `computed` container write a new function, inside this function create one variable named `values`:
 
 ```js
 computed: {
@@ -272,7 +274,7 @@ computed: {
 }
 ```
 
-`values` will hold only numbers: avocado prices. It's a plain and simple array and it will look like this: `[1.34, 4.55, 4.00, 5.89]`. Now we need to determine the domain. Inside the same `scaleY` function write a new variable.
+`values` will hold only numbers: avocado prices. It's a plain and simple array and it will look like this: `[1.13, 0.93, 0.8, 1.17]`. Now we need to determine the domain. Inside the same `scaleY` function write a new variable.
 
 ```js
 computed: {
@@ -288,7 +290,7 @@ computed: {
 >⚠️d3.max is a method to get the highest value inside an array of numbers. (To get the lowest you can use d3.min). The domain can also be 'hard-coded' which means that we can directly input numbers such as: [0,1000].
 However, in this case, if the data change the domain does not change (and this is not good!).
 
-`domain` is a new array with only two values: 0 and 5.89. Min and max.
+`domain` is a new array with only two values: 0 and 1.17. Min and max.
 Now we need to define a range of pixels to limit the size of our future bars. Inside `scaleY` we can define a third variable.
 
 ```js
@@ -515,7 +517,7 @@ ticksY () {
 
 }
 ```
-Inside we want to combine the d3 `ticks()` method with `map`. While the first one is automatically returning an array of numbers inside the domain, we also want to loop through them in order to obtain a better designed array of objects for our html.
+Inside we want to combine the [d3 `ticks()`](https://github.com/d3/d3-axis#axis_ticks) method with `map`. While the first one is automatically returning an array of numbers inside the domain, we also want to loop through them in order to obtain a better designed array of objects for our html.
 
 ```js
 ticksY () {
@@ -589,4 +591,4 @@ Yes, there are. If you dive into D3 you will probably notice that the majority o
 **What if I am stuck even after this tutorial and I am panicking?**
 All the necessary knowledge to successfully integrate your graphics in our template are covered in Session 01.
 Coding requires time and patience, sometimes you might just not be interested in getting there!
-Use the examples provided in Session 01 and you will be more than fine ☺️ 
+Use the examples provided in Session 01 and you will be more than fine ☺️
