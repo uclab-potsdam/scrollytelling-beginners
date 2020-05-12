@@ -62,7 +62,7 @@ npm run serve
 ---
 
 #### Python's SimpleHTTPServer
-Follow [this guide](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server) to fully understand what you are doing and/or install python.
+Follow [this guide](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server) to fully understand what are you doing and/or install python.
 
 If you already have python installed, in the `code` directory run:
 
