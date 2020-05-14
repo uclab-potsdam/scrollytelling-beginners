@@ -45,6 +45,7 @@ in any code editor to change things.
 
 ### Getting Started (Advanced)
 ------
+#### light-server with node/npm
 This requires some experience in using a command line as well as having node/npm
 installed, but it gives the advantage to auto-reload pages when files are changed
 and enables linting to keep your code nice and tidy.
@@ -58,3 +59,29 @@ start a server
 ```
 npm run serve
 ```
+---
+
+#### Python's SimpleHTTPServer
+Follow [this guide](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server) to fully understand what are you doing and/or install python.
+
+If you already have python installed, in the `code` directory run:
+
+```python
+python -V
+```
+To check your python version.
+
+Enter the command to start the server in the directory:
+```python
+# If Python version returned above is 3.X
+python3 -m http.server
+# On windows try "python" instead of "python3", or "py -3"
+# If Python version returned above is 2.X
+python -m SimpleHTTPServer
+```
+---
+
+#### Atom's Package atom-live-server
+If you are using Atom:
+* go to Preferences > Packages > in the search bar type 'atom-live-server' > Install and/or Enable
+* In the menu bar go to Packages > atom-live-server > Start server
