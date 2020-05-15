@@ -12,7 +12,6 @@ const app = new Vue({
     transitionProgress: 0,
     transitionDirection: 'down',
     transitionStarted: false,
-    transitionStartTime: null,
     transitionLastTime: null,
     transitionDuration: 1000
   },
@@ -122,7 +121,6 @@ const app = new Vue({
       }
     },
     transition (time) {
-      if (this.transitionStartTime === null) this.transitionStartTime = time
       if (this.transitionLastTime === null) this.transitionLastTime = time
       const p = (time - this.transitionLastTime) / this.transitionDuration
       if (this.transitionDirection === 'down') {
@@ -135,7 +133,6 @@ const app = new Vue({
         requestAnimationFrame(this.transition)
       } else {
         this.transitionStarted = false
-        this.transitionStartTime = null
         this.transitionLastTime = null
       }
     }
