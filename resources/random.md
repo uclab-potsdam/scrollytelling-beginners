@@ -8,6 +8,14 @@ Link | Author | Type | Description
 [Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb) | chromebeat.com | Chrome Extension | A Web Server for Chrome, serves web pages from a local folder over the network, using HTTP. Runs offline.
 [Atom Live Server](https://atom.io/packages/atom-live-server) | jas-chen | Atom package | Launch a simple development http server with live reload capability.
 
+### Cool random libraries
+JS libraries to do things!
+
+Link | Description
+--- | ---
+[Zdog](https://zzz.dog/) | Zdog is a 3D JavaScript engine for `<canvas>` and SVG. With Zdog, you can design and render simple 3D models on the Web. Zdog is a pseudo-3D engine. Its geometries exist in 3D space, but are rendered as flat shapes. This makes Zdog special.
+[Anime.js](https://animejs.com/) | JavaScript animation library. It works with CSS properties, SVG, DOM attributes and JavaScript Objects. 
+
 
 ### Cool random things
 Collection of random things regarding code and how to learn code.
