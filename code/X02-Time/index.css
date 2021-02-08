@@ -118,7 +118,7 @@ figure {
   background-color: var(--color-black);
   position: -webkit-sticky;
   position: sticky;
-  width: 60%;
+  width: 100%;
   max-width: 1200px;
   height: 100vh;
   margin: 0;
@@ -130,7 +130,12 @@ figure {
   transform: translate3d(0, 0, 0);
 }
 
+#mapid {
+  height: 100%;
+}
+
 figure svg {
+  background-color: var(--color-accent);
   /* position: absolute; */
   top: 0;
 }
@@ -142,7 +147,7 @@ svg rect.bg {
 svg text.step {
   text-anchor: middle;
   fill: var(--color-white);
-  font-size: 32em;
+  font-size: 2em;
   font-weight: 900;
 }
 

@@ -9,9 +9,17 @@
   <script src="../assets/js/vue.js"></script>
   <script src="../assets/js/scrollama.min.js"></script>
   <script src="../assets/js/d3.min.js"></script>
+  <script src="../assets/js/topojson-client.min.js"></script>
   <link rel="stylesheet" href="../assets/css/normalize.css">
   <link rel="stylesheet" href="../assets/css/fonts.css">
   <link rel="stylesheet" href="index.css">
+  <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/> -->
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+<!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script> -->
 </head>
 
 <body>
@@ -19,8 +27,8 @@
     <header>
       <h1>Scrollytelling Template - Time Sync! 🧬</h1>
     </header>
-    <main>
-      <section class="intro">
+    <main ref="article">
+      <section class="intro" ref="intro">
         <p>
           <strong>Intro Text → </strong>
           Sich in einer Stadt nicht zurechtfinden heißt nicht viel. In einer Stadt sich aber zu verirren, wie man in
@@ -31,12 +39,13 @@
           welches sie überdauert hat.
         </p>
       </section>
-
       <section class="scrolly">
         <figure ref="figure">
+          <!-- <div id="mapid"></div> -->
           <svg :width="width" :height="height">
-            <rect class="bg" :width="width * progress" :height="height" />
-            <text class="step" :y="height / 2" dy="0.35em" :x="width / 2">{{ step }}</text>
+            <!-- <rect class="bg" :width="width * progress" :height="height" /> -->
+            <!-- <path :d="tripShape" stroke="black" fill="none"/> -->
+            <text class="step" :y="height / 2" dy="0.35em" :x="width / 2">{{ currentTimestamp }}</text>
           </svg>
         </figure>
         <article>
