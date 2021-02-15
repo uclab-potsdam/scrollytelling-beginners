@@ -104,7 +104,7 @@ article {
   padding: var(--spacing);
   width: 40%;
   max-width: 460px;
-  margin: 20vh 0;
+  padding: 20vh 0;
 }
 
 .step:nth-child(1) {
@@ -135,8 +135,7 @@ figure {
 }
 
 figure svg {
-  background-color: var(--color-accent);
-  /* position: absolute; */
+  background-color: var(--color-black);
   top: 0;
 }
 

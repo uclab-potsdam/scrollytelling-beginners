@@ -33,11 +33,11 @@ const app = new Vue({
     // }).addTo(mymap)
 
     d3.json('../assets/data/pathway.json').then(data => {
-      // console.log(data)
+      console.log(data)
       this.data = data.map(d => {
         return {
           unix_timestamp: d.unix_timestamp,
-          timestamp: d.timestamp,
+          timestamp: new Date(d.timestamp),
           longitude: +d.longitude,
           latitude: +d.latitude,
           speed: +d.speed
@@ -48,6 +48,7 @@ const app = new Vue({
     console.log(this.timeScale)
   },
   computed: {
+    // Some geo stuff I'll need??? Maybe???
     // onlyCoordinates () {
     //   return {
     //     type: 'LineString',
@@ -56,25 +57,6 @@ const app = new Vue({
     //     })
     //   }
     // },
-    innerHeight () {
-      return this.height - this.margin * 2
-    },
-    innerWidth () {
-      return this.width - this.margin * 2
-    },
-    timeScale () {
-      const max = d3.max(this.data.map(d => d.timestamp))
-      const min = d3.min(this.data.map(d => d.timestamp))
-      return d3.scaleLinear().domain([new Date(min), new Date(max)]).range([0, this.height])
-    },
-    invertedScale () {
-      const max = d3.max(this.data.map(d => d.timestamp))
-      const min = d3.min(this.data.map(d => d.timestamp))
-      return d3.scaleLinear().domain([0, 2080]).range([new Date(min), new Date(max)]).nice()
-    },
-    timeFormat () {
-      return d3.timeFormat('%H:%M:%S')
-    }
     // projection () {
     //   return d3.geoMercator().center([52.52, 13.41]).translate([this.innerWidth + (this.margin * 5), this.innerHeight / 12]).scale(150000)
     // },
@@ -84,6 +66,27 @@ const app = new Vue({
     // tripShape () {
     //   return this.pathGeometry(this.onlyCoordinates)
     // }
+    innerHeight () {
+      return this.height - this.margin * 2
+    },
+    innerWidth () {
+      return this.width - this.margin * 2
+    },
+    timeScale () {
+      // Will need to do data stuff.
+      const max = d3.max(this.data.map(d => d.timestamp))
+      const min = d3.min(this.data.map(d => d.timestamp))
+      return d3.scaleLinear().domain([min, max]).range([0, this.height])
+    },
+    invertedScale () {
+      const max = d3.max(this.data.map(d => d.timestamp))
+      const min = d3.min(this.data.map(d => d.timestamp))
+      // Need to fix domain on inverted scale based on current div size.
+      return d3.scaleLinear().domain([0, 2080]).range([min, max]).nice()
+    },
+    timeFormat () {
+      return d3.timeFormat('%H:%M:%S')
+    }
   },
   methods: {
     resize () {
@@ -92,6 +95,7 @@ const app = new Vue({
       this.height = bounds.height
       this.scroller.resize()
     },
+    // Method to get scroll position and generate timestamp
     calcCurrentTime () {
       const bounds = document.scrollingElement.scrollTop - this.$refs.intro.scrollHeight
       this.currentTimestamp = this.timeFormat(Math.round(this.invertedScale(bounds)))
@@ -101,7 +105,6 @@ const app = new Vue({
     },
     onProgress (step) {
       this.calcCurrentTime()
-
       this.step = step.index
       this.progress = step.progress
     },
